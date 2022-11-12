@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import GameBoard from "@/components/GameBoard.vue";
 import GameControls from "@/components/GameControls.vue";
-import GameOverOverlay from "./GameOverOverlay.vue";
+import AppButton from "@/components/AppButton.vue";
 import { useGame } from "@/composables/useGame";
 
-const { score, scoreDiff, gameOver } = useGame();
+const { score, scoreDiff, newGame, clearBoard } = useGame();
 </script>
 <template>
-  score: {{ score }} + scoreDiff: {{ scoreDiff }}
+  <div class="flex justify-center flex-col">
+    <div>score: {{ score }} + scoreDiff: {{ scoreDiff }}</div>
+    <AppButton @click="newGame"> New Game </AppButton>
+    <AppButton @click="clearBoard"> Clear Board </AppButton>
+  </div>
   <GameBoard> </GameBoard>
-  <GameControls></GameControls>
-  <GameOverOverlay v-if="gameOver"></GameOverOverlay>
+  <div class="mx-auto">
+    <GameControls></GameControls>
+  </div>
 </template>

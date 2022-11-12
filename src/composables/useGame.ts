@@ -1,16 +1,17 @@
 import { ref } from "vue";
 import { createSharedComposable } from "@vueuse/core";
 import {
-  createEmptyMatrix,
-  flattenMatrix,
-  mergeMatrixRight,
-  mergeMatrixLeft,
-  mergeMatrixDown,
-  mergeMatrixUp,
+  createEmptyBoard,
+  mergeBoardDown,
+  mergeBoardLeft,
+  mergeBoardRight,
+  mergeBoardUp,
+  flattenBoard,
   addNumberToRandomPlace,
   calculateScore,
-} from "@/lib/matrixUtils";
-import type { Matrix, Vector } from "@/types/matrix";
+  isBoardFull,
+} from "@/lib/2048game";
+import type { Board, FlattenedBoard } from "@/types/2048game";
 import { KeyboardKeys } from "@/types/keyboard";
 
 import { onKeyUp } from "@vueuse/core";
@@ -31,17 +32,18 @@ const tileColorMap = new Map([
 ]);
 
 const moveMethodsMap = new Map([
-  [KeyboardKeys.ArrowUp, mergeMatrixUp],
-  [KeyboardKeys.ArrowDown, mergeMatrixDown],
-  [KeyboardKeys.ArrowLeft, mergeMatrixLeft],
-  [KeyboardKeys.ArrowRight, mergeMatrixRight],
+  [KeyboardKeys.ArrowUp, mergeBoardUp],
+  [KeyboardKeys.ArrowDown, mergeBoardDown],
+  [KeyboardKeys.ArrowLeft, mergeBoardLeft],
+  [KeyboardKeys.ArrowRight, mergeBoardRight],
 ]);
 
 function useGameShared() {
   const gridSize = ref(6);
-  const board = ref<Matrix>(createEmptyMatrix(gridSize.value));
-  const flattenBoard = ref<Vector>(
-    flattenMatrix(createEmptyMatrix(gridSize.value)),
+  const board = ref<Board>(createEmptyBoard(gridSize.value));
+  const isGameRunning = ref(false);
+  const flattenedBoard = ref<FlattenedBoard>(
+    flattenBoard(createEmptyBoard(gridSize.value)),
   );
   const score = ref(0);
   const gameOver = ref(false);
@@ -49,23 +51,32 @@ function useGameShared() {
   const keyEventsCleanupsFns = new Map<KeyboardKeys, Function>();
 
   function newGame() {
+    isGameRunning.value = true;
     gameOver.value = false;
     const newBoard = addNumberToRandomPlace(
-      createEmptyMatrix(gridSize.value),
+      createEmptyBoard(gridSize.value),
       2,
     );
-    board.value = newBoard as Matrix;
-    flattenBoard.value = flattenMatrix(newBoard as Matrix);
-    console.log("registering");
+    board.value = newBoard;
+    flattenedBoard.value = flattenBoard(newBoard);
+    registerKeyEvents();
+  }
+
+  function continueGame(boardState: Board) {
+    isGameRunning.value = true;
+    gameOver.value = false;
+    const newBoard = boardState;
+    board.value = newBoard;
+    flattenedBoard.value = flattenBoard(newBoard);
     registerKeyEvents();
   }
 
   function moveBoard(direction: KeyboardKeys) {
     const moveMethod = moveMethodsMap.get(direction);
-    if (moveMethod) {
+    if (moveMethod && isGameRunning.value) {
       const newBoard = moveMethod(board.value);
       board.value = newBoard;
-      flattenBoard.value = flattenMatrix(newBoard);
+      flattenedBoard.value = flattenBoard(newBoard);
       const newScore = calculateScore(board.value);
       scoreDiff.value = newScore - score.value;
       score.value = newScore;
@@ -74,20 +85,23 @@ function useGameShared() {
   }
 
   function clearBoard() {
-    const newBoard = createEmptyMatrix(gridSize.value);
+    isGameRunning.value = false;
+    const newBoard = createEmptyBoard(gridSize.value);
     board.value = newBoard;
-    flattenBoard.value = flattenMatrix(newBoard);
+    flattenedBoard.value = flattenBoard(newBoard);
     removeKeyEvents();
   }
 
   function turn() {
-    const newBoard = addNumberToRandomPlace(board.value, 2);
-    if (!newBoard) {
+    if (isBoardFull(board.value)) {
       gameOver.value = true;
+      isGameRunning.value = false;
+      removeKeyEvents();
       return;
     }
+    const newBoard = addNumberToRandomPlace(board.value, 2);
     board.value = newBoard;
-    flattenBoard.value = flattenMatrix(newBoard);
+    flattenedBoard.value = flattenBoard(newBoard);
   }
 
   function registerKeyEvents() {
@@ -100,7 +114,6 @@ function useGameShared() {
       keyEventsCleanupsFns.set(
         key,
         onKeyUp(key, (event) => {
-          console.log("event", event.key);
           moveBoard(event.key as KeyboardKeys);
         }),
       );
@@ -123,13 +136,14 @@ function useGameShared() {
     gridSize,
     tileColorMap,
     newGame,
-    flattenBoard,
+    flattenedBoard,
     clearBoard,
     moveBoard,
     score,
     scoreDiff,
     gameOver,
     setGridSize,
+    continueGame,
   };
 }
 

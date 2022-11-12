@@ -1,14 +1,10 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-full h-full flex items-center justify-center"
+    class="absolute top-0 left-0 bottom-0 right-0 w-full bg-black bg-opacity-50 z-50 flex justify-center items-center flex-col text-white"
   >
-    <div
-      class="bg-white rounded-lg shadow-lg p-4 flex flex-col items-center justify-center"
-    >
-      <h1 class="text-2xl font-bold mb-4">Game Over</h1>
-      <p class="mb-4">Your score: {{ score }}</p>
-      <AppButton @click="newGame"> New Game </AppButton>
-    </div>
+    <h1 class="text-2xl font-bold mb-4">Game Over</h1>
+    <p class="mb-4">Your score: {{ score }}</p>
+    <AppButton @click="newGame"> New Game </AppButton>
   </div>
 </template>
 

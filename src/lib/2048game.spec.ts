@@ -1,16 +1,16 @@
 import { describe, test, expect } from "vitest";
 import {
-  createEmptyMatrix,
-  mergeMatrixDown,
-  mergeMatrixLeft,
-  mergeMatrixRight,
-  mergeMatrixUp,
-  isMatrixFull,
-  flattenMatrix,
-} from "@/lib/matrixUtils";
+  createEmptyBoard,
+  mergeBoardDown,
+  mergeBoardLeft,
+  mergeBoardRight,
+  mergeBoardUp,
+  isBoardFull,
+  flattenBoard,
+} from "@/lib/2048game";
 
-describe("matrixUtils", () => {
-  describe("createEmptyMatrix", () => {
+describe("2048gameUtils", () => {
+  describe("createEmptyBoard", () => {
     test.each([
       {
         gridSize: 6,
@@ -32,16 +32,16 @@ describe("matrixUtils", () => {
         ],
       },
     ])(
-      `should create an empty matrix of size %gridSize`,
+      `should create an empty board of size %gridSize`,
       ({ gridSize, expected }) => {
-        expect(createEmptyMatrix(gridSize)).toEqual(expected);
+        expect(createEmptyBoard(gridSize)).toEqual(expected);
       },
     );
   });
-  describe("mergeMatrixLeft", () => {
+  describe("mergeBoardLeft", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4, 4, 0, 0],
           [0, 0, 4, 0, 4, 0],
           [0, 0, 0, 0, 0, 0],
@@ -58,14 +58,14 @@ describe("matrixUtils", () => {
           [8, 16, 0, 0, 0, 0],
         ],
       },
-    ])(`shouldmerge matrix %matrix to the left`, ({ matrix, expected }) => {
-      expect(mergeMatrixLeft(matrix)).toEqual(expected);
+    ])(`should merge board %board to the left`, ({ board, expected }) => {
+      expect(mergeBoardLeft(board)).toEqual(expected);
     });
   });
-  describe("mergeMatrixRigth", () => {
+  describe("mergeBoardRigth", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4, 4, 0, 0],
           [0, 0, 4, 0, 4, 0],
           [0, 0, 0, 0, 0, 0],
@@ -82,14 +82,14 @@ describe("matrixUtils", () => {
           [0, 0, 0, 0, 8, 16],
         ],
       },
-    ])(`shouldmerge matrix %matrix to the left`, ({ matrix, expected }) => {
-      expect(mergeMatrixRight(matrix)).toEqual(expected);
+    ])(`shouldmerge board %board to the left`, ({ board, expected }) => {
+      expect(mergeBoardRight(board)).toEqual(expected);
     });
   });
-  describe("mergeMatrixUp", () => {
+  describe("mergeBoardUp", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4, 4, 0, 0],
           [0, 0, 4, 0, 4, 0],
           [0, 0, 0, 0, 0, 0],
@@ -106,14 +106,14 @@ describe("matrixUtils", () => {
           [0, 0, 0, 0, 0, 0],
         ],
       },
-    ])(`shouldmerge matrix %matrix up`, ({ matrix, expected }) => {
-      expect(mergeMatrixUp(matrix)).toEqual(expected);
+    ])(`shouldmerge board %board up`, ({ board, expected }) => {
+      expect(mergeBoardUp(board)).toEqual(expected);
     });
   });
-  describe("mergeMatrixDown", () => {
+  describe("mergeBoardDown", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4, 4, 0, 0],
           [0, 0, 4, 0, 4, 0],
           [0, 0, 0, 0, 0, 0],
@@ -130,14 +130,14 @@ describe("matrixUtils", () => {
           [4, 8, 8, 4, 16, 0],
         ],
       },
-    ])(`shouldmerge matrix %matrix up`, ({ matrix, expected }) => {
-      expect(mergeMatrixDown(matrix)).toEqual(expected);
+    ])(`shouldmerge board %board up`, ({ board, expected }) => {
+      expect(mergeBoardDown(board)).toEqual(expected);
     });
   });
-  describe("isMatrixFull", () => {
+  describe("isBoardFull", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4],
           [2, 2, 4],
           [2, 2, 2],
@@ -145,7 +145,7 @@ describe("matrixUtils", () => {
         expected: true,
       },
       {
-        matrix: [
+        board: [
           [0, 2, 4],
           [2, 2, 4],
           [2, 2, 2],
@@ -153,24 +153,24 @@ describe("matrixUtils", () => {
         expected: false,
       },
     ])(
-      `should return %expected when checking if matrix %matrix is full`,
-      ({ matrix, expected }) => {
-        expect(isMatrixFull(matrix)).toEqual(expected);
+      `should return %expected when checking if board %board is full`,
+      ({ board, expected }) => {
+        expect(isBoardFull(board)).toEqual(expected);
       },
     );
   });
-  describe("flattenMatrix", () => {
+  describe("flattenBoard", () => {
     test.each([
       {
-        matrix: [
+        board: [
           [2, 2, 4],
           [2, 2, 4],
           [2, 2, 2],
         ],
         expected: [2, 2, 4, 2, 2, 4, 2, 2, 2],
       },
-    ])(`should flatten matrix %matrix to %expected`, ({ matrix, expected }) => {
-      expect(flattenMatrix(matrix)).toEqual(expected);
+    ])(`should flatten board %board to %expected`, ({ board, expected }) => {
+      expect(flattenBoard(board)).toEqual(expected);
     });
   });
 });
