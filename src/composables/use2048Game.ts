@@ -81,11 +81,6 @@ export function use2048Game() {
     const moveMethod = moveMethodsMap.get(direction);
     if (moveMethod && $gameStateStore.$state.isRunning) {
       const newBoard = moveMethod($gameStateStore.$state.board);
-      console.log(
-        "moveBoard",
-        JSON.stringify($gameStateStore.$state.board),
-        JSON.stringify(newBoard),
-      );
       if (isBoardEqual(newBoard, $gameStateStore.$state.board)) {
         return;
       }

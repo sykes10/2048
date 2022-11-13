@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AppButton from "./AppButton.vue";
-import { use2048Game } from "@/composables/use2048GameGame";
+import { use2048Game } from "@/composables/use2048Game";
 import { KeyboardKeys } from "@/types/keyboard";
 const { moveBoard } = use2048Game();
 </script>

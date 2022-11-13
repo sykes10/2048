@@ -2,7 +2,7 @@
 import GameBoard from "@/components/GameBoard.vue";
 import GameControls from "@/components/GameControls.vue";
 import AppButton from "@/components/AppButton.vue";
-import { use2048Game } from "@/composables/use2048GameGame";
+import { use2048Game } from "@/composables/use2048Game";
 import { use2048GameStateStore } from "@/store/2048GameState";
 import IconRestart from "@/components/icons/IconRestart.vue";
 
