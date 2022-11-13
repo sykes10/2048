@@ -1,6 +1,6 @@
 <template>
   <GameOverlay>
-    <h1 class="text-7xl font-bold mb-4">Game <br />Over</h1>
+    <h1 class="text-7xl font-bold mb-4">You Won</h1>
   </GameOverlay>
 </template>
 <script lang="ts" setup>

@@ -14,6 +14,8 @@ type State = {
   scoreDiff: number;
   tileValueToWin: number;
   isGridSelectorOpen: boolean;
+  biggestTileValue: number;
+  isGameWon: boolean;
 };
 
 export const use2048GameStateStore = defineStore("2048GameState", {
@@ -30,6 +32,8 @@ export const use2048GameStateStore = defineStore("2048GameState", {
       scoreDiff: 0,
       tileValueToWin: 2048,
       isGridSelectorOpen: false,
+      biggestTileValue: 0,
+      isGameWon: false,
     };
   },
   actions: {
