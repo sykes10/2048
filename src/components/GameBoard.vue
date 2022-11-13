@@ -10,10 +10,13 @@
       :key="i"
     />
     <GameOverOverlay v-if="$gameState.isGameOver" />
+    <GameGridSelector v-if="$gameState.isGridSelectorOpen" />
   </div>
 </template>
 <script lang="ts" setup>
 import GameOverOverlay from "@/components/GameOverOverlay.vue";
+import GameGridSelector from "@/components/GameGridSelector.vue";
+
 import GameTile from "@/components/GameTile.vue";
 import { use2048GameStateStore } from "@/store/2048GameState";
 

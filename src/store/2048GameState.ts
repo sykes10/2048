@@ -13,6 +13,7 @@ type State = {
   score: number;
   scoreDiff: number;
   tileValueToWin: number;
+  isGridSelectorOpen: boolean;
 };
 
 export const use2048GameStateStore = defineStore("2048GameState", {
@@ -28,6 +29,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
       score: 0,
       scoreDiff: 0,
       tileValueToWin: 2048,
+      isGridSelectorOpen: false,
     };
   },
   actions: {
@@ -66,6 +68,9 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     updateScore(score: number) {
       this.scoreDiff = score - this.score;
       this.score = score;
+    },
+    setGridSelector(isOpen: boolean) {
+      this.isGridSelectorOpen = isOpen;
     },
   },
 });
