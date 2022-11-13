@@ -1,10 +1,4 @@
 <template>
-  <div>
-    <AppButton @click="$gameState.setGridSize(4)"> 4x4 </AppButton>
-    <AppButton @click="$gameState.setGridSize(5)"> 5x5 </AppButton>
-    <AppButton @click="$gameState.setGridSize(6)"> 6x6 </AppButton>
-    <AppButton @click="$gameState.setGridSize(8)"> 8x8 </AppButton>
-  </div>
   <div
     :class="`grid-cols-${$gameState.$state.gridSize} grid-rows-${$gameState.$state.gridSize}`"
     ref="gameBoardRef"
@@ -19,7 +13,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import AppButton from "@/components/AppButton.vue";
 import GameOverOverlay from "@/components/GameOverOverlay.vue";
 import GameTile from "@/components/GameTile.vue";
 import { use2048GameStateStore } from "@/store/2048GameState";

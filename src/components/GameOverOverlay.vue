@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import AppButton from "./AppButton.vue";
-import { use2048Game } from "@/composables/useGame";
+import { use2048Game } from "@/composables/use2048GameGame";
 import { use2048GameStateStore } from "@/store/2048GameState";
 
 const $gameState = use2048GameStateStore();

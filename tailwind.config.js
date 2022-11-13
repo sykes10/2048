@@ -20,14 +20,37 @@ module.exports = {
     "bg-tile-512",
     "bg-tile-1024",
     "bg-tile-2048",
+    "drop-shadow-tile-2",
+    "drop-shadow-tile-4",
+    "drop-shadow-tile-8",
+    "drop-shadow-tile-16",
+    "drop-shadow-tile-32",
+    "drop-shadow-tile-64",
+    "drop-shadow-tile-128",
+    "drop-shadow-tile-256",
+    "drop-shadow-tile-512",
+    "drop-shadow-tile-1024",
+    "drop-shadow-tile-2048",
   ],
   theme: {
     container: {
       center: true,
       padding: "1rem",
     },
-
     extend: {
+      dropShadow: {
+        "tile-2": "0 0 0.25rem #ED64E5",
+        "tile-4": "0 0 0.25rem #CD7DFF",
+        "tile-8": "0 0 0.25rem #895AFF",
+        "tile-16": "0 0 0.25rem #7BA1FF",
+        "tile-32": "0 0 0.25rem #42AEFF",
+        "tile-64": "0 0 0.25rem #00CFC3",
+        "tile-128": "0 0 0.25rem #00BC84",
+        "tile-256": "0 0 0.25rem #ACC800",
+        "tile-512": "0 0 0.25rem #E7A600",
+        "tile-1024": "0 0 0.25rem #FF7A00",
+        "tile-2048": "0 0 0.25rem #FF004D",
+      },
       colors: {
         "purple-500": "#442482",
         "tile-0": "#2B1C47",
