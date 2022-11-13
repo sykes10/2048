@@ -1,5 +1,7 @@
 <template>
-  <button class="border rounded bg-purple-700 px-2 py-1 text-white font-bold">
+  <button
+    class="rounded bg-purple-500 px-2 py-1 text-white text-lg shadow-button"
+  >
     <slot></slot>
   </button>
 </template>

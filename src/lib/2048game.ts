@@ -1,4 +1,4 @@
-import type { Row, Board, FlattenedBoard } from "@/types/2048game";
+import type { Row, Board, FlattenedBoard, Direction } from "@/types/2048game";
 
 export function createEmptyBoard(gridSize: number = 6): Board {
   const board: Board = [];
@@ -100,7 +100,7 @@ export function isBoardFull(board: Board): boolean {
 
 export function addNumberToRandomPlace(
   board: Board,
-  tilevalue: number = 1,
+  tilevalue: number = 2,
 ): Board {
   if (isBoardFull(board)) {
     return board;
@@ -128,15 +128,24 @@ export function flattenBoard(board: Board): FlattenedBoard {
   return board.flat();
 }
 
-export function calculateScore(board: Board): number {
+export function calculateScore(
+  board: Board,
+  mininumTileValueToSpawn: number,
+): number {
   let score = 0;
   for (let row = 0; row < board.length; row++) {
     for (let column = 0; column < board.length; column++) {
       const tileValue = board[row][column];
       if (tileValue > 1) {
-        score += tileValue + tileValue - 4;
+        score += tileValue + tileValue - mininumTileValueToSpawn * 2;
       }
     }
   }
   return score;
+}
+
+export function isBoardEqual(board1: Board, board2: Board): boolean {
+  return flattenBoard(board1).every((tileValue, index) => {
+    return tileValue === flattenBoard(board2)[index];
+  });
 }

@@ -1,3 +1,16 @@
+@import "./typography.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+*,
+*::before,
+*::after {
+    font-family: 'Retro Gaming', sans-serif;
+}
+
+body {
+    background: radial-gradient(#1F0D41, #090018);
+    height: 100vh;
+}

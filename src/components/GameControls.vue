@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import AppButton from "./AppButton.vue";
-
-import { useGame } from "@/composables/useGame";
+import { use2048Game } from "@/composables/useGame";
 import { KeyboardKeys } from "@/types/keyboard";
-const { moveBoard } = useGame();
+const { moveBoard } = use2048Game();
 </script>
 <template>
   <div class="flex gap-2">

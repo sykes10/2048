@@ -7,6 +7,7 @@ import {
   mergeBoardUp,
   isBoardFull,
   flattenBoard,
+  isBoardEqual,
 } from "@/lib/2048game";
 
 describe("2048gameUtils", () => {
@@ -58,6 +59,18 @@ describe("2048gameUtils", () => {
           [8, 16, 0, 0, 0, 0],
         ],
       },
+      {
+        board: [
+          [2, 4, 0],
+          [4, 0, 0],
+          [0, 0, 0],
+        ],
+        expected: [
+          [2, 4, 0],
+          [4, 0, 0],
+          [0, 0, 0],
+        ],
+      },
     ])(`should merge board %board to the left`, ({ board, expected }) => {
       expect(mergeBoardLeft(board)).toEqual(expected);
     });
@@ -80,6 +93,18 @@ describe("2048gameUtils", () => {
           [0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 8, 16],
+        ],
+      },
+      {
+        board: [
+          [0, 4, 2],
+          [0, 0, 4],
+          [0, 0, 0],
+        ],
+        expected: [
+          [0, 4, 2],
+          [0, 0, 4],
+          [0, 0, 0],
         ],
       },
     ])(`shouldmerge board %board to the left`, ({ board, expected }) => {
@@ -106,6 +131,18 @@ describe("2048gameUtils", () => {
           [0, 0, 0, 0, 0, 0],
         ],
       },
+      {
+        board: [
+          [0, 4, 2],
+          [0, 0, 4],
+          [0, 0, 0],
+        ],
+        expected: [
+          [0, 4, 2],
+          [0, 0, 4],
+          [0, 0, 0],
+        ],
+      },
     ])(`shouldmerge board %board up`, ({ board, expected }) => {
       expect(mergeBoardUp(board)).toEqual(expected);
     });
@@ -130,7 +167,19 @@ describe("2048gameUtils", () => {
           [4, 8, 8, 4, 16, 0],
         ],
       },
-    ])(`shouldmerge board %board up`, ({ board, expected }) => {
+      {
+        board: [
+          [0, 0, 0],
+          [0, 8, 2],
+          [0, 4, 4],
+        ],
+        expected: [
+          [0, 0, 0],
+          [0, 8, 2],
+          [0, 4, 4],
+        ],
+      },
+    ])(`shouldmerge board %board down`, ({ board, expected }) => {
       expect(mergeBoardDown(board)).toEqual(expected);
     });
   });
@@ -171,6 +220,40 @@ describe("2048gameUtils", () => {
       },
     ])(`should flatten board %board to %expected`, ({ board, expected }) => {
       expect(flattenBoard(board)).toEqual(expected);
+    });
+  });
+  describe("isBoardEqual", () => {
+    test.each([
+      {
+        board1: [
+          [2, 2, 4],
+          [2, 2, 4],
+          [2, 2, 2],
+        ],
+        board2: [
+          [2, 2, 4],
+          [2, 2, 4],
+          [2, 2, 2],
+        ],
+        expected: true,
+        description: "should return true when comparing two equal boards",
+      },
+      {
+        board1: [
+          [0, 2, 2],
+          [0, 2, 4],
+          [0, 2, 2],
+        ],
+        board2: [
+          [0, 2, 4],
+          [0, 2, 4],
+          [0, 2, 2],
+        ],
+        expected: false,
+        description: "should return true when comparing two equal boards",
+      },
+    ])(`%description`, ({ board1, board2, expected }) => {
+      expect(isBoardEqual(board1, board2)).toEqual(expected);
     });
   });
 });

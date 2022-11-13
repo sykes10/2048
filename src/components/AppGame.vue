@@ -2,18 +2,21 @@
 import GameBoard from "@/components/GameBoard.vue";
 import GameControls from "@/components/GameControls.vue";
 import AppButton from "@/components/AppButton.vue";
-import { useGame } from "@/composables/useGame";
+import { use2048Game } from "@/composables/useGame";
+import { use2048GameStateStore } from "@/store/2048GameState";
 
-const { score, scoreDiff, newGame, clearBoard } = useGame();
+const $gameState = use2048GameStateStore();
+const { score, scoreDiff } = $gameState.$state;
+const { newGame, resetGame } = use2048Game();
+
+resetGame();
 </script>
 <template>
-  <div class="flex justify-center flex-col">
-    <div>score: {{ score }} + scoreDiff: {{ scoreDiff }}</div>
+  <div class="flex justify-center flex-col max-w-md w-full mx-auto">
     <AppButton @click="newGame"> New Game </AppButton>
-    <AppButton @click="clearBoard"> Clear Board </AppButton>
-  </div>
-  <GameBoard> </GameBoard>
-  <div class="mx-auto">
-    <GameControls></GameControls>
+    <GameBoard> </GameBoard>
+    <div class="mx-auto">
+      <GameControls></GameControls>
+    </div>
   </div>
 </template>

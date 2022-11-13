@@ -1,24 +1,43 @@
 <template>
   <div
-    :class="colorClass"
-    class="flex items-center justify-center text-2xl rounded justify-self-center h-16 w-16 transition-all duration-300 font-medium"
+    ref="tileRef"
+    :class="`bg-tile-${tile} text-tile-${tile}`"
+    class="flex items-center justify-center text-2xl rounded-xl justify-self-center transition-all duration-300 font-medium w-full"
   >
     {{ props.tile || "" }}
   </div>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useGame } from "@/composables/useGame";
-
-const { tileColorMap } = useGame();
+import { onMounted, ref } from "vue";
 
 type GameCellProps = {
   tile: number;
 };
 
+const tileRef = ref<HTMLDivElement | null>(null);
 const props = defineProps<GameCellProps>();
 
-const colorClass = computed(() => {
-  return tileColorMap.get(props.tile);
+const colors: Record<string, string> = {
+  "0": "#2B1C47",
+  "2": "#ED64E5",
+  "4": "#CD7DFF",
+  "8": "#895AFF",
+  "16": "#7BA1FF",
+  "32": "#42AEFF",
+  "64": "#00CFC3",
+  "128": "#00BC84",
+  "256": "#ACC800",
+  "512": "#E7A600",
+  "1024": "#FF7A00",
+  "2048": "#FF004D",
+};
+
+onMounted(() => {
+  if (tileRef.value) {
+    tileRef.value.style.setProperty(
+      "filter",
+      `drop-shadow(0 0 0.5rem ${colors[props.tile]})`,
+    );
+  }
 });
 </script>
