@@ -5,7 +5,7 @@ import AppGame from "@/components/AppGame.vue";
 <template>
   <main class="container mt-14">
     <img
-      src="@/assets/images/2048game.png"
+      src="src/assets/images/2048game.png"
       alt="2048 title"
       class="mx-auto w-52 mb-10"
     />

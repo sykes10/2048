@@ -68,6 +68,7 @@ module.exports = {
       },
       boxShadow: {
         button: "0px 8px 0px #2C1455",
+        'button-pressed': "0px 4px 0px #2C1455",
       },
     },
   },

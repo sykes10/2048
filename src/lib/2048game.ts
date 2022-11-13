@@ -1,4 +1,4 @@
-import type { Row, Board, FlattenedBoard, Direction } from "@/types/2048game";
+import type { Row, Board, FlattenedBoard } from "@/types/2048game";
 
 export function createEmptyBoard(gridSize: number = 6): Board {
   const board: Board = [];
@@ -18,7 +18,7 @@ export function filterZero(row: Row): Row {
 export function slide(row: Row) {
   let newRow = filterZero(row);
   for (let i = 0; i < newRow.length - 1; i++) {
-    if (newRow[i] == newRow[i + 1]) {
+    if (newRow[i] === newRow[i + 1]) {
       newRow[i] *= 2;
       newRow[i + 1] = 0;
     }
