@@ -8,6 +8,7 @@ import {
   calculateScore,
   isBoardFull,
   isBoardEqual,
+  isGameWon,
 } from "@/lib/2048game";
 import { KeyboardKeys } from "@/types/keyboard";
 
@@ -94,6 +95,15 @@ export function use2048Game() {
     }
   }
   function turn() {
+    if (
+      isGameWon(
+        $gameStateStore.$state.board,
+        $gameStateStore.$state.tileValueToWin,
+      )
+    ) {
+      $gameStateStore.gameWon();
+      return;
+    }
     if (isBoardFull($gameStateStore.$state.board)) {
       $gameStateStore.gameOver();
       removeKeyEvents();

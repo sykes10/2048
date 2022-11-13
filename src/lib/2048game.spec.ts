@@ -8,6 +8,7 @@ import {
   isBoardFull,
   flattenBoard,
   isBoardEqual,
+  isGameWon,
 } from "@/lib/2048game";
 
 describe("2048gameUtils", () => {
@@ -254,6 +255,31 @@ describe("2048gameUtils", () => {
       },
     ])(`%description`, ({ board1, board2, expected }) => {
       expect(isBoardEqual(board1, board2)).toEqual(expected);
+    });
+  });
+  describe("isGameWon", () => {
+    test.each([
+      {
+        board: [
+          [2, 2, 4],
+          [2, 2, 4],
+          [2, 2, 2048],
+        ],
+        expected: true,
+        description: "should return true when the board has a 2048 tile",
+      },
+      {
+        board: [
+          [0, 2, 2],
+          [0, 2, 4],
+          [0, 2, 2],
+        ],
+        expected: false,
+        description:
+          "should return false when the board does not has a 2048 tile",
+      },
+    ])(`%description`, ({ board, expected }) => {
+      expect(isGameWon(board, 2048)).toEqual(expected);
     });
   });
 });

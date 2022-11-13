@@ -76,5 +76,9 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     setGridSelector(isOpen: boolean) {
       this.isGridSelectorOpen = isOpen;
     },
+    gameWon() {
+      this.isRunning = false;
+      this.isGameWon = true;
+    },
   },
 });

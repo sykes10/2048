@@ -149,3 +149,9 @@ export function isBoardEqual(board1: Board, board2: Board): boolean {
     return tileValue === flattenBoard(board2)[index];
   });
 }
+
+export function isGameWon(board: Board, winTileValue: number): boolean {
+  return flattenBoard(board).some((tileValue) => {
+    return tileValue === winTileValue;
+  });
+}
