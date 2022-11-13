@@ -2,13 +2,13 @@
   <div
     ref="tileRef"
     :class="`bg-tile-${tile} text-tile-${tile}`"
-    class="flex items-center justify-center text-2xl rounded-xl justify-self-center transition-all duration-300 font-medium w-full"
+    class="flex items-center justify-center text-2xl rounded-xl justify-self-center transition-all duration-300 ease-in-out font-medium w-full"
   >
     {{ props.tile || "" }}
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 type GameCellProps = {
   tile: number;
@@ -32,12 +32,18 @@ const colors: Record<string, string> = {
   "2048": "#FF004D",
 };
 
-onMounted(() => {
+function setTileDropShadow() {
   if (tileRef.value) {
     tileRef.value.style.setProperty(
       "filter",
       `drop-shadow(0 0 0.5rem ${colors[props.tile]})`,
     );
   }
+}
+
+onMounted(() => {
+  setTileDropShadow();
 });
+
+watch(() => props.tile, setTileDropShadow, { immediate: true });
 </script>
