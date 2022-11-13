@@ -6,7 +6,7 @@ import { KeyboardKeys } from "@/types/keyboard";
 const { moveBoard } = use2048Game();
 </script>
 <template>
-  <div class="grid grid-cols-3 gap-3">
+  <div class="grid grid-cols-3 gap-3 place-self-center">
     <span></span>
     <AppButton @click="moveBoard(KeyboardKeys.ArrowUp)" class="">
       <IconArrow></IconArrow>

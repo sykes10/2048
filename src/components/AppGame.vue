@@ -27,9 +27,12 @@ resetGame();
         <span class="text-xl self-end">{{ $gameState.$state.score }}</span>
       </div>
     </div>
-    <GameBoard> </GameBoard>
-    <div class="mx-auto">
-      <div class="bg-tile-0"></div>
+    <GameBoard class="mb-8"> </GameBoard>
+    <div class="mx-auto grid grid-cols-2 gap-4">
+      <div class="bg-tile-0 p-4 text-white rounded-xl w-full text-sm">
+        <p class="mb-2">How to play:</p>
+        <p>Use your arrow keys to move the tiles or click on the arrows.</p>
+      </div>
       <GameControls></GameControls>
     </div>
   </div>
