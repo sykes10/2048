@@ -14,31 +14,18 @@ import { KeyboardKeys } from "@/types/keyboard";
 
 import { onKeyUp } from "@vueuse/core";
 import { use2048GameStateStore } from "@/store/2048GameState";
+import { createSharedComposable } from "@vueuse/core";
 
-export function use2048Game() {
-  const tileColorMap = new Map([
-    [0, "bg-gray-300"],
-    [2, "bg-green-300"],
-    [4, "bg-green-400"],
-    [8, "bg-blue-300"],
-    [16, "bg-blue-600"],
-    [32, "bg-orange-300"],
-    [64, "bg-orange-600"],
-    [128, "bg-purple-300"],
-    [256, "bg-purple-600"],
-    [512, "bg-gray-400"],
-    [1024, "bg-gray-400"],
-    [2048, "bg-gray-400"],
-  ]);
+const moveMethodsMap = new Map([
+  [KeyboardKeys.ArrowUp, mergeBoardUp],
+  [KeyboardKeys.ArrowDown, mergeBoardDown],
+  [KeyboardKeys.ArrowLeft, mergeBoardLeft],
+  [KeyboardKeys.ArrowRight, mergeBoardRight],
+]);
 
-  const moveMethodsMap = new Map([
-    [KeyboardKeys.ArrowUp, mergeBoardUp],
-    [KeyboardKeys.ArrowDown, mergeBoardDown],
-    [KeyboardKeys.ArrowLeft, mergeBoardLeft],
-    [KeyboardKeys.ArrowRight, mergeBoardRight],
-  ]);
+const keyEventsCleanupsFns = new Map<KeyboardKeys, Function>();
 
-  const keyEventsCleanupsFns = new Map<KeyboardKeys, Function>();
+export const use2048Game = createSharedComposable(function () {
   const $gameStateStore = use2048GameStateStore();
 
   function registerKeyEvents() {
@@ -65,17 +52,11 @@ export function use2048Game() {
   function newGame() {
     const newBoard = addNumberToRandomPlace(
       createEmptyBoard($gameStateStore.$state.gridSize),
-      2,
+      $gameStateStore.$state.mininumTileValueToSpawn,
     );
     $gameStateStore.newGame(newBoard);
     removeKeyEvents();
     registerKeyEvents();
-    console.log("registerKeyEvents");
-  }
-
-  function resetGame() {
-    removeKeyEvents();
-    $gameStateStore.resetGame();
   }
 
   function moveBoard(direction: KeyboardKeys) {
@@ -83,8 +64,10 @@ export function use2048Game() {
     if (moveMethod && $gameStateStore.$state.isRunning) {
       const newBoard = moveMethod($gameStateStore.$state.board);
       if (isBoardEqual(newBoard, $gameStateStore.$state.board)) {
+        console.log("no change");
         return;
       }
+
       const newScore = calculateScore(
         newBoard,
         $gameStateStore.$state.mininumTileValueToSpawn,
@@ -107,7 +90,6 @@ export function use2048Game() {
     if (isBoardFull($gameStateStore.$state.board)) {
       $gameStateStore.gameOver();
       removeKeyEvents();
-      console.log("removeKeyEvents");
       return;
     }
     const newBoard = addNumberToRandomPlace(
@@ -120,7 +102,5 @@ export function use2048Game() {
   return {
     newGame,
     moveBoard,
-    resetGame,
-    tileColorMap,
   };
-}
+});

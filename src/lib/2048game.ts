@@ -12,7 +12,7 @@ export function createEmptyBoard(gridSize: number = 6): Board {
 }
 
 export function filterZero(row: Row): Row {
-  return row.filter((tileValue) => tileValue);
+  return row.filter((tileValue) => tileValue !== 0);
 }
 
 export function slide(row: Row) {
@@ -32,8 +32,9 @@ export function slide(row: Row) {
 
 export function mergeBoardLeft(board: Board): Board {
   const newBoard = createEmptyBoard(board.length);
+
   for (let row = 0; row < board.length; row++) {
-    let newRow = board[row];
+    let newRow = copyRow(board[row]);
     newRow = slide(newRow);
     newBoard[row] = newRow;
   }
@@ -44,7 +45,7 @@ export function mergeBoardRight(board: Board): Board {
   const newBoard = createEmptyBoard(board.length);
 
   for (let row = 0; row < board.length; row++) {
-    let newRow = board[row];
+    let newRow = copyRow(board[row]);
     newRow.reverse();
     newRow = slide(newRow);
     newBoard[row] = newRow.reverse();
@@ -123,6 +124,9 @@ export function addNumberToRandomPlace(
 export function copyBoard(board: Board): Board {
   return board.map((row) => [...row]);
 }
+export function copyRow(row: Row): Row {
+  return [...row];
+}
 
 export function flattenBoard(board: Board): FlattenedBoard {
   return board.flat();
@@ -145,9 +149,7 @@ export function calculateScore(
 }
 
 export function isBoardEqual(board1: Board, board2: Board): boolean {
-  return flattenBoard(board1).every((tileValue, index) => {
-    return tileValue === flattenBoard(board2)[index];
-  });
+  return JSON.stringify(board1) === JSON.stringify(board2);
 }
 
 export function isGameWon(board: Board, winTileValue: number): boolean {

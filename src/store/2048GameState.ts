@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { Board, FlattenedBoard } from "@/types/2048game";
-import { createEmptyBoard, flattenBoard } from "@/lib/2048game";
+import { copyBoard, createEmptyBoard, flattenBoard } from "@/lib/2048game";
 
 type State = {
   board: Board;
@@ -37,17 +37,11 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     };
   },
   actions: {
-    newGame(board: Board) {
+    newGame(board?: Board) {
       this.isRunning = true;
       this.isGameOver = false;
       this.score = 0;
-      this.updateBoard(board);
-    },
-    resetGame() {
-      this.isRunning = false;
-      this.isGameOver = false;
-      this.score = 0;
-      this.updateBoard(createEmptyBoard(this.gridSize));
+      this.updateBoard(board ?? createEmptyBoard(this.gridSize));
     },
     gameOver() {
       this.isRunning = false;
@@ -55,19 +49,20 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     },
     setGridSize(gridSize: number) {
       this.gridSize = gridSize;
-      this.resetGame();
+      this.newGame();
     },
     setTileValueToWin(tileValueToWin: number) {
       this.tileValueToWin = tileValueToWin;
-      this.resetGame();
+      this.newGame();
     },
     setMininumTileValueToSpawn(mininumTileValueToSpawn: number) {
       this.mininumTileValueToSpawn = mininumTileValueToSpawn;
-      this.resetGame();
+      this.newGame();
     },
     updateBoard(board: Board) {
-      this.board = board;
-      this.flattenedBoard = flattenBoard(board);
+      const newBoard = copyBoard(board);
+      this.board = newBoard;
+      this.flattenedBoard = flattenBoard(newBoard);
     },
     updateScore(score: number) {
       this.scoreDiff = score - this.score;

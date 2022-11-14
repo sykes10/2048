@@ -108,6 +108,18 @@ describe("2048gameUtils", () => {
           [0, 0, 0],
         ],
       },
+      {
+        board: [
+          [0, 0, 0],
+          [0, 0, 0],
+          [2, 0, 0],
+        ],
+        expected: [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 2],
+        ],
+      },
     ])(`shouldmerge board %board to the left`, ({ board, expected }) => {
       expect(mergeBoardRight(board)).toEqual(expected);
     });

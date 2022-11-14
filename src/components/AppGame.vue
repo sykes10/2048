@@ -7,9 +7,9 @@ import { use2048GameStateStore } from "@/store/2048GameState";
 import IconRestart from "@/components/icons/IconRestart.vue";
 
 const $gameState = use2048GameStateStore();
-const { resetGame } = use2048Game();
+const { newGame } = use2048Game();
 
-resetGame();
+newGame();
 </script>
 <template>
   <div class="flex justify-center flex-col max-w-md w-full mx-auto">
@@ -18,7 +18,7 @@ resetGame();
         <AppButton @click="$gameState.setGridSelector(true)" class="mr-4">
           New game
         </AppButton>
-        <AppButton @click="resetGame">
+        <AppButton @click="newGame">
           <IconRestart></IconRestart>
         </AppButton>
       </div>
