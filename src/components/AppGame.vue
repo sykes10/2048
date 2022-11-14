@@ -5,11 +5,19 @@ import AppButton from "@/components/AppButton.vue";
 import { use2048Game } from "@/composables/use2048Game";
 import { use2048GameStateStore } from "@/store/2048GameState";
 import IconRestart from "@/components/icons/IconRestart.vue";
+import { onMounted } from "vue";
 
 const $gameState = use2048GameStateStore();
 const { newGame } = use2048Game();
 
-newGame();
+onMounted(() => {
+  if ($gameState.lastKnownBoard) {
+    $gameState.setGridSize($gameState.lastKnownBoard.length);
+    newGame($gameState.lastKnownBoard);
+  } else {
+    newGame();
+  }
+});
 </script>
 <template>
   <div class="flex justify-center flex-col max-w-md w-full mx-auto">
@@ -21,7 +29,7 @@ newGame();
         >
           New game
         </AppButton>
-        <AppButton @click="newGame" class="shrink-0">
+        <AppButton @click="newGame()" class="shrink-0">
           <IconRestart></IconRestart>
         </AppButton>
       </div>

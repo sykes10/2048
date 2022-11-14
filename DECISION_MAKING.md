@@ -3,6 +3,7 @@
 ## Introduction
 
 This document is for me to explain why I took the decision I made in the codebase.
+Here's a link to the deployed game [2048 Game](https://comfy-dieffenbachia-166f12.netlify.app/)
 
 ## Game Logic
 

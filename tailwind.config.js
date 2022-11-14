@@ -9,6 +9,7 @@ module.exports = {
     "grid-rows-6",
     "grid-cols-6",
     "bg-tile-0",
+    "bg-tile-1",
     "bg-tile-2",
     "bg-tile-4",
     "bg-tile-8",
@@ -20,6 +21,7 @@ module.exports = {
     "bg-tile-512",
     "bg-tile-1024",
     "bg-tile-2048",
+    "drop-shadow-tile-1",
     "drop-shadow-tile-2",
     "drop-shadow-tile-4",
     "drop-shadow-tile-8",
@@ -39,6 +41,7 @@ module.exports = {
     },
     extend: {
       dropShadow: {
+        "tile-1": "0 0 0.25rem #ED647D",
         "tile-2": "0 0 0.25rem #ED64E5",
         "tile-4": "0 0 0.25rem #CD7DFF",
         "tile-8": "0 0 0.25rem #895AFF",
@@ -54,6 +57,7 @@ module.exports = {
       colors: {
         "purple-500": "#442482",
         "tile-0": "#2B1C47",
+        "tile-1": "#ED647D",
         "tile-2": "#ED64E5",
         "tile-4": "#CD7DFF",
         "tile-8": "#895AFF",
@@ -68,7 +72,7 @@ module.exports = {
       },
       boxShadow: {
         button: "0px 8px 0px #2C1455",
-        'button-pressed': "0px 4px 0px #2C1455",
+        "button-pressed": "0px 4px 0px #2C1455",
       },
     },
   },

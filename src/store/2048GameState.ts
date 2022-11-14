@@ -3,22 +3,27 @@ import type { Board, FlattenedBoard } from "@/types/2048game";
 import { copyBoard, createEmptyBoard } from "@/lib/2048Game";
 import { useLocalStorage } from "@vueuse/core";
 
-const maxScoreKey = "maxScore";
-const maxScoreLocalStorage = useLocalStorage(maxScoreKey, 0);
+const maxScoreLocalStorage = useLocalStorage("maxScore", 0);
+const lastKnownBoardLocalStorage = useLocalStorage<string>(
+  "lastKnownBoard",
+  null,
+);
 
 type State = {
+  biggestTileValue: number;
   board: Board;
   gridSize: number;
+  initialTileValueToSpawn: number;
   isGameOver: boolean;
+  isGameWon: boolean;
+  isGridSelectorOpen: boolean;
   isRunning: boolean;
+  lastKnownBoard: Board | null;
   maxScore: number;
   mininumTileValueToSpawn: number;
   score: number;
   scoreDiff: number;
   tileValueToWin: number;
-  isGridSelectorOpen: boolean;
-  biggestTileValue: number;
-  isGameWon: boolean;
 };
 
 export const use2048GameStateStore = defineStore("2048GameState", {
@@ -29,18 +34,20 @@ export const use2048GameStateStore = defineStore("2048GameState", {
   },
   state: (): State => {
     return {
+      biggestTileValue: 0,
       board: [],
-      gridSize: 4,
+      gridSize: 6,
+      initialTileValueToSpawn: 2,
       isGameOver: false,
+      isGameWon: false,
+      isGridSelectorOpen: false,
       isRunning: false,
+      lastKnownBoard: JSON.parse(lastKnownBoardLocalStorage.value),
       maxScore: maxScoreLocalStorage.value,
-      mininumTileValueToSpawn: 2,
+      mininumTileValueToSpawn: 1,
       score: 0,
       scoreDiff: 0,
       tileValueToWin: 2048,
-      isGridSelectorOpen: false,
-      biggestTileValue: 0,
-      isGameWon: false,
     };
   },
   actions: {
@@ -70,6 +77,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     updateBoard(board: Board) {
       const newBoard = copyBoard(board);
       this.board = newBoard;
+      lastKnownBoardLocalStorage.value = JSON.stringify(newBoard);
     },
     updateScore(score: number) {
       this.scoreDiff = score - this.score;

@@ -1,4 +1,4 @@
-import type { Row, Board, FlattenedBoard } from "@/types/2048game";
+import type { Row, Board } from "@/types/2048game";
 
 export function createEmptyBoard(gridSize: number = 6): Board {
   const board: Board = [];

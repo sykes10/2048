@@ -14,6 +14,7 @@ import { KeyboardKeys } from "@/types/keyboard";
 
 import { onKeyUp } from "@vueuse/core";
 import { use2048GameStateStore } from "@/store/2048GameState";
+import type { Board } from "@/types/2048game";
 
 const moveMethodsMap = new Map([
   [KeyboardKeys.ArrowUp, mergeBoardUp],
@@ -48,12 +49,12 @@ export function use2048Game() {
     });
   }
 
-  function newGame() {
+  function newGame(board?: Board) {
     const newBoard = addNumberToRandomPlace(
       createEmptyBoard($gameStateStore.$state.gridSize),
-      $gameStateStore.$state.mininumTileValueToSpawn,
+      $gameStateStore.$state.initialTileValueToSpawn,
     );
-    $gameStateStore.newGame(newBoard);
+    $gameStateStore.newGame(board || newBoard);
     removeKeyEvents();
     registerKeyEvents();
   }
