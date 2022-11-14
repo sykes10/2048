@@ -1,6 +1,10 @@
 import { defineStore } from "pinia";
 import type { Board, FlattenedBoard } from "@/types/2048game";
 import { copyBoard, createEmptyBoard } from "@/lib/2048game";
+import { useLocalStorage } from "@vueuse/core";
+
+const maxScoreKey = "maxScore";
+const maxScoreLocalStorage = useLocalStorage(maxScoreKey, 0);
 
 type State = {
   board: Board;
@@ -29,7 +33,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
       gridSize: 4,
       isGameOver: false,
       isRunning: false,
-      maxScore: 0,
+      maxScore: maxScoreLocalStorage.value,
       mininumTileValueToSpawn: 2,
       score: 0,
       scoreDiff: 0,
@@ -49,6 +53,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     gameOver() {
       this.isRunning = false;
       this.isGameOver = true;
+      this.setMaxScore();
     },
     setGridSize(gridSize: number) {
       this.gridSize = gridSize;
@@ -76,6 +81,12 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     gameWon() {
       this.isRunning = false;
       this.isGameWon = true;
+    },
+    setMaxScore() {
+      if (this.score > this.maxScore) {
+        this.maxScore = this.score;
+        maxScoreLocalStorage.value = this.maxScore;
+      }
     },
   },
 });

@@ -14,19 +14,28 @@ newGame();
 <template>
   <div class="flex justify-center flex-col max-w-md w-full mx-auto">
     <div class="flex justify-between">
-      <div class="flex items-center">
-        <AppButton @click="$gameState.setGridSelector(true)" class="mr-4">
+      <div class="flex items-center w-full">
+        <AppButton
+          @click="$gameState.setGridSelector(true)"
+          class="mr-4 shrink-0"
+        >
           New game
         </AppButton>
-        <AppButton @click="newGame">
+        <AppButton @click="newGame" class="shrink-0">
           <IconRestart></IconRestart>
         </AppButton>
       </div>
       <div
-        class="flex flex-col items-end text-white bg-tile-0 px-4 py-2 h-14 rounded-xl my-4 w-40"
+        class="flex flex-col items-end text-white bg-tile-0 px-4 py-2 h-14 rounded-xl my-4 w-40 mr-4"
       >
         <span class="text-xs">Score</span>
-        <span class="text-xl self-end">{{ $gameState.$state.score }}</span>
+        <span class="self-end">{{ $gameState.$state.score }}</span>
+      </div>
+      <div
+        class="flex flex-col items-end text-white bg-tile-0 px-4 py-2 h-14 rounded-xl my-4 w-40"
+      >
+        <span class="text-xs">Best</span>
+        <span class="self-end">{{ $gameState.$state.maxScore }}</span>
       </div>
     </div>
     <GameBoard class="mb-8"> </GameBoard>
