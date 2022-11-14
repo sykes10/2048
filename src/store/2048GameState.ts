@@ -3,7 +3,7 @@ import type { Board, FlattenedBoard } from "@/types/2048game";
 import { copyBoard, createEmptyBoard } from "@/lib/2048Game";
 import { useLocalStorage } from "@vueuse/core";
 
-const maxScoreLocalStorage = useLocalStorage("maxScore", 0);
+const bestScoreLocalStorage = useLocalStorage("bestScore", 0);
 const lastKnownBoardLocalStorage = useLocalStorage<string>(
   "lastKnownBoard",
   null,
@@ -19,7 +19,7 @@ type State = {
   isGridSelectorOpen: boolean;
   isRunning: boolean;
   lastKnownBoard: Board | null;
-  maxScore: number;
+  bestScore: number;
   mininumTileValueToSpawn: number;
   score: number;
   scoreDiff: number;
@@ -43,7 +43,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
       isGridSelectorOpen: false,
       isRunning: false,
       lastKnownBoard: JSON.parse(lastKnownBoardLocalStorage.value),
-      maxScore: maxScoreLocalStorage.value,
+      bestScore: bestScoreLocalStorage.value,
       mininumTileValueToSpawn: 1,
       score: 0,
       scoreDiff: 0,
@@ -60,7 +60,7 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     gameOver() {
       this.isRunning = false;
       this.isGameOver = true;
-      this.setMaxScore();
+      this.setbestScore();
     },
     setGridSize(gridSize: number) {
       this.gridSize = gridSize;
@@ -90,10 +90,10 @@ export const use2048GameStateStore = defineStore("2048GameState", {
       this.isRunning = false;
       this.isGameWon = true;
     },
-    setMaxScore() {
-      if (this.score > this.maxScore) {
-        this.maxScore = this.score;
-        maxScoreLocalStorage.value = this.maxScore;
+    setbestScore() {
+      if (this.score > this.bestScore) {
+        this.bestScore = this.score;
+        bestScoreLocalStorage.value = this.bestScore;
       }
     },
   },

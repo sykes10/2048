@@ -3,12 +3,7 @@ import AppGame from "@/components/AppGame.vue";
 </script>
 
 <template>
-  <main class="container pt-1">
-    <img
-      src="/images/2048game.png"
-      alt="2048 title"
-      class="mx-auto w-52 mb-4 mt-8"
-    />
+  <main class="container">
     <AppGame></AppGame>
   </main>
 </template>

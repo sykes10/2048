@@ -17,7 +17,7 @@
         5x5
       </button>
       <button
-        @click="setGrid(5)"
+        @click="setGrid(6)"
         class="bg-purple-500 rounded-xl h-12 text-2xl"
       >
         6x6
