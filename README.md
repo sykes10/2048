@@ -2,7 +2,7 @@
 
 ## Desicions 
 
-I decided to use @vueuse/core library because it provides a lot of useful composables that will simplify the code and make it more readable. I could create those myself but it would be pointless because the final code will be the same and the library is three-shakeable so the bundle size would be very small. The library is also well tested by millions of users and that ensures that it won't be broken.
+Check the [DECISION_MAKING.MD](DECISION_MAKING.md) file for more information.
 
 
 ## Project Setup
@@ -17,12 +17,17 @@ npm install
 npm run dev
 ```
 
+
 ### Type-Check, Compile and Minify for Production
 
 ```sh
 npm run build
 ```
+### Run Production build
 
+```sh
+npm run preview
+```
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh

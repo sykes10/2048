@@ -9,7 +9,7 @@ import {
   isBoardEqual,
   isGameWon,
   isGameOver,
-} from "@/lib/2048game";
+} from "@/lib/2048Game";
 import { KeyboardKeys } from "@/types/keyboard";
 
 import { onKeyUp } from "@vueuse/core";

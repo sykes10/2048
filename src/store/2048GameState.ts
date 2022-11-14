@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { Board, FlattenedBoard } from "@/types/2048game";
-import { copyBoard, createEmptyBoard } from "@/lib/2048game";
+import { copyBoard, createEmptyBoard } from "@/lib/2048Game";
 import { useLocalStorage } from "@vueuse/core";
 
 const maxScoreKey = "maxScore";

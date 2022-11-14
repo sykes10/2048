@@ -8,7 +8,7 @@ import {
   isBoardEqual,
   isGameWon,
   isGameOver,
-} from "@/lib/2048game";
+} from "@/lib/2048Game";
 
 describe("2048gameUtils", () => {
   describe("createEmptyBoard", () => {
