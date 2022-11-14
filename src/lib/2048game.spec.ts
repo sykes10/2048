@@ -5,10 +5,9 @@ import {
   mergeBoardLeft,
   mergeBoardRight,
   mergeBoardUp,
-  isBoardFull,
-  flattenBoard,
   isBoardEqual,
   isGameWon,
+  isGameOver,
 } from "@/lib/2048game";
 
 describe("2048gameUtils", () => {
@@ -196,44 +195,30 @@ describe("2048gameUtils", () => {
       expect(mergeBoardDown(board)).toEqual(expected);
     });
   });
-  describe("isBoardFull", () => {
+  describe("isGameOver", () => {
     test.each([
       {
         board: [
-          [2, 2, 4],
-          [2, 2, 4],
-          [2, 2, 2],
+          [2, 4, 8],
+          [8, 16, 4],
+          [2, 4, 2],
         ],
         expected: true,
       },
       {
         board: [
-          [0, 2, 4],
+          [2, 2, 4],
           [2, 2, 4],
           [2, 2, 2],
         ],
         expected: false,
       },
     ])(
-      `should return %expected when checking if board %board is full`,
+      `should return %expected when checking if board %board is game over`,
       ({ board, expected }) => {
-        expect(isBoardFull(board)).toEqual(expected);
+        expect(isGameOver(board)).toEqual(expected);
       },
     );
-  });
-  describe("flattenBoard", () => {
-    test.each([
-      {
-        board: [
-          [2, 2, 4],
-          [2, 2, 4],
-          [2, 2, 2],
-        ],
-        expected: [2, 2, 4, 2, 2, 4, 2, 2, 2],
-      },
-    ])(`should flatten board %board to %expected`, ({ board, expected }) => {
-      expect(flattenBoard(board)).toEqual(expected);
-    });
   });
   describe("isBoardEqual", () => {
     test.each([

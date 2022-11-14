@@ -4,7 +4,7 @@
     :class="`bg-tile-${tile} drop-shadow-tile-${tile}`"
     class="flex items-center justify-center text-4xl rounded-xl justify-self-center transition-all duration-300 ease-in-out font-medium w-full text-white"
   >
-    {{ props.tile || "" }}
+    {{ tile || "" }}
   </div>
 </template>
 <script lang="ts" setup>
@@ -15,5 +15,5 @@ type GameCellProps = {
 };
 
 const tileRef = ref<HTMLDivElement | null>(null);
-const props = defineProps<GameCellProps>();
+defineProps<GameCellProps>();
 </script>

@@ -46,9 +46,9 @@ export function mergeBoardRight(board: Board): Board {
 
   for (let row = 0; row < board.length; row++) {
     let newRow = copyRow(board[row]);
-    newRow.reverse();
+    newRow = reverseRow(newRow);
     newRow = slide(newRow);
-    newBoard[row] = newRow.reverse();
+    newBoard[row] = reverseRow(newRow);
   }
 
   return newBoard;
@@ -77,9 +77,9 @@ export function mergeBoardDown(board: Board): Board {
     for (let row = 0; row < board.length; row++) {
       newRow.push(board[row][column]);
     }
-    newRow.reverse();
+    newRow = reverseRow(newRow);
     newRow = slide(newRow);
-    newRow.reverse();
+    newRow = reverseRow(newRow);
 
     for (let row = 0; row < board.length; row++) {
       newBoard[row][column] = newRow[row];
@@ -128,10 +128,6 @@ export function copyRow(row: Row): Row {
   return [...row];
 }
 
-export function flattenBoard(board: Board): FlattenedBoard {
-  return board.flat();
-}
-
 export function calculateScore(
   board: Board,
   mininumTileValueToSpawn: number,
@@ -153,7 +149,30 @@ export function isBoardEqual(board1: Board, board2: Board): boolean {
 }
 
 export function isGameWon(board: Board, winTileValue: number): boolean {
-  return flattenBoard(board).some((tileValue) => {
+  return board.flat().some((tileValue) => {
     return tileValue === winTileValue;
   });
+}
+
+export function reverseRow(row: Row): Row {
+  const newRow = [];
+  for (let i = row.length - 1; i >= 0; i--) {
+    newRow.push(row[i]);
+  }
+  return newRow;
+}
+
+export function isGameOver(board: Board): boolean {
+  const newBoard = copyBoard(board);
+  const leftBoard = mergeBoardLeft(newBoard);
+  const rightBoard = mergeBoardRight(newBoard);
+  const upBoard = mergeBoardUp(newBoard);
+  const downBoard = mergeBoardDown(newBoard);
+
+  return (
+    isBoardEqual(leftBoard, board) &&
+    isBoardEqual(rightBoard, board) &&
+    isBoardEqual(upBoard, board) &&
+    isBoardEqual(downBoard, board)
+  );
 }

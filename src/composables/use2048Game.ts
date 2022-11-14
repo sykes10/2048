@@ -6,9 +6,9 @@ import {
   mergeBoardUp,
   addNumberToRandomPlace,
   calculateScore,
-  isBoardFull,
   isBoardEqual,
   isGameWon,
+  isGameOver,
 } from "@/lib/2048game";
 import { KeyboardKeys } from "@/types/keyboard";
 
@@ -87,16 +87,16 @@ export const use2048Game = createSharedComposable(function () {
       $gameStateStore.gameWon();
       return;
     }
-    if (isBoardFull($gameStateStore.$state.board)) {
-      $gameStateStore.gameOver();
-      removeKeyEvents();
-      return;
-    }
     const newBoard = addNumberToRandomPlace(
       $gameStateStore.$state.board,
       $gameStateStore.$state.mininumTileValueToSpawn,
     );
     $gameStateStore.updateBoard(newBoard);
+    if (isGameOver($gameStateStore.$state.board)) {
+      $gameStateStore.gameOver();
+      removeKeyEvents();
+      return;
+    }
   }
 
   return {

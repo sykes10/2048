@@ -6,7 +6,7 @@
   >
     <GameTile
       :tile="tile"
-      v-for="(tile, i) in $gameState.$state.flattenedBoard"
+      v-for="(tile, i) in $gameState.flattenBoard"
       :key="i"
     />
     <GameOverOverlay v-if="$gameState.isGameOver" />

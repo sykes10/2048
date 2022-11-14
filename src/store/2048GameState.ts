@@ -1,10 +1,9 @@
 import { defineStore } from "pinia";
 import type { Board, FlattenedBoard } from "@/types/2048game";
-import { copyBoard, createEmptyBoard, flattenBoard } from "@/lib/2048game";
+import { copyBoard, createEmptyBoard } from "@/lib/2048game";
 
 type State = {
   board: Board;
-  flattenedBoard: FlattenedBoard;
   gridSize: number;
   isGameOver: boolean;
   isRunning: boolean;
@@ -19,10 +18,14 @@ type State = {
 };
 
 export const use2048GameStateStore = defineStore("2048GameState", {
+  getters: {
+    flattenBoard(): FlattenedBoard {
+      return this.board.flat();
+    },
+  },
   state: (): State => {
     return {
       board: [],
-      flattenedBoard: [],
       gridSize: 4,
       isGameOver: false,
       isRunning: false,
@@ -62,7 +65,6 @@ export const use2048GameStateStore = defineStore("2048GameState", {
     updateBoard(board: Board) {
       const newBoard = copyBoard(board);
       this.board = newBoard;
-      this.flattenedBoard = flattenBoard(newBoard);
     },
     updateScore(score: number) {
       this.scoreDiff = score - this.score;
