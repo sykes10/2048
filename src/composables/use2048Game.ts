@@ -14,7 +14,6 @@ import { KeyboardKeys } from "@/types/keyboard";
 
 import { onKeyUp } from "@vueuse/core";
 import { use2048GameStateStore } from "@/store/2048GameState";
-import { createSharedComposable } from "@vueuse/core";
 
 const moveMethodsMap = new Map([
   [KeyboardKeys.ArrowUp, mergeBoardUp],
@@ -25,7 +24,7 @@ const moveMethodsMap = new Map([
 
 const keyEventsCleanupsFns = new Map<KeyboardKeys, Function>();
 
-export const use2048Game = createSharedComposable(function () {
+export function use2048Game() {
   const $gameStateStore = use2048GameStateStore();
 
   function registerKeyEvents() {
@@ -103,4 +102,4 @@ export const use2048Game = createSharedComposable(function () {
     newGame,
     moveBoard,
   };
-});
+}
